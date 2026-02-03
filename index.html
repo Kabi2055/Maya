@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Question ❤️</title>
     <style>
+        /* This makes everything look pretty and centered */
         body {
             display: flex;
             flex-direction: column;
@@ -12,37 +13,45 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe6e6;
+            background-color: #ffe6e6; /* Soft pink background */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-        }
-
-        h1 {
-            color: #d63384;
-            font-size: 3rem;
+            overflow: hidden; /* Prevents scrollbars when button moves */
         }
 
         .container {
             background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .buttons {
-            margin-top: 2rem;
             display: flex;
             gap: 20px;
             justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            min-height: 50px;
         }
 
         button {
             padding: 15px 30px;
             font-size: 1.2rem;
+            font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
         #yesBtn {
@@ -50,22 +59,37 @@
             color: white;
         }
 
+        #yesBtn:hover {
+            background-color: #ff758f;
+            transform: scale(1.1);
+        }
+
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            position: relative;
+            transition: 0.1s; /* Makes it jump faster */
         }
 
-        .heart {
-            color: #ff4d6d;
+        #media-container {
             font-size: 5rem;
+            margin-bottom: 1rem;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="heart">❤️</div>
+        <div id="media-container">❤️</div>
         <h1 id="question">Will you be my Valentine?</h1>
         
         <div class="buttons">
@@ -75,20 +99,31 @@
     </div>
 
     <script>
+        // Function to move the "No" button when hovered
         function moveButton() {
             const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             
-            btn.style.position = 'absolute';
+            // Calculate random positions within the window
+            // Subtracting some padding so it doesn't go off screen
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
+            
+            btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
+        // Function that runs when she clicks "Yes"
         function celebrate() {
-            document.getElementById('question').innerText = "Yay! See you on the 14th! 🥰";
+            // Update the text
+            document.getElementById('question').innerText = "Yay! Best decision ever! 🥰";
+            
+            // Hide the buttons
             document.querySelector('.buttons').style.display = 'none';
-            document.querySelector('.heart').innerText = "💖✨🎉";
+            
+            // Show the GIF you picked
+            const mediaContainer = document.getElementById('media-container');
+            mediaContainer.innerHTML = '<img src="https://media1.giphy.com/media/UShSDCJnyepPea4MLr/giphy.gif" alt="Celebration GIF">';
         }
     </script>
 
